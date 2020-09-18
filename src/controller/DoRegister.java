@@ -43,18 +43,19 @@ public class DoRegister extends HttpServlet {
 
 		CustomerService service = (CustomerService) CustomerService.getInstance();
 		
-		Customer customer = new Customer(id, password, name, gender, email); 
+		String page;
 		
-		service.addCustomer(customer);
-		
-		String page="null";
-		
-	if( customer!=null)
-	{
-			page ="/view/registerSuccess.jsp";
-			request.setAttribute("customer", customer);
-	}
 	
+	if((service.findCustomer(id) !=null)||(id==null || password==null || name==null ||gender==null ||email==null)) {//같은 아이디가 있을 경우 and 모든 정보를 입력하지 않았을 경우
+		page ="/view/registerFail.jsp";
+		request.setAttribute("id", id);
+	}else {
+		
+	Customer customer = new Customer(id, password, name, gender, email); 
+		service.addCustomer(customer);
+		page ="/view/registerSuccess.jsp";
+		request.setAttribute("customer", customer);
+	}
 			
 		RequestDispatcher dispatcher = request.getRequestDispatcher(page);
 		dispatcher.forward(request, response);
