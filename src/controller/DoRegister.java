@@ -40,13 +40,13 @@ public class DoRegister extends HttpServlet {
 		String gender = request.getParameter("gender");
 		String email = request.getParameter("email");
 		//System.out.println(gender);
-
+		System.out.println(email);
 		CustomerService service = (CustomerService) CustomerService.getInstance();
 		
 		String page;
 		
 	
-	if((service.findCustomer(id) !=null)||(id==null || password==null || name==null ||gender==null ||email==null)) {//같은 아이디가 있을 경우 and 모든 정보를 입력하지 않았을 경우
+	if((service.findCustomer(id) !=null)||((id==null) || (password==null) || (name==null) ||(gender==null) ||(email==""))) {//같은 아이디가 있을 경우 and 모든 정보를 입력하지 않았을 경우
 		page ="/view/registerFail.jsp";
 		request.setAttribute("id", id);
 	}else {
